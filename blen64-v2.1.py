@@ -33,7 +33,7 @@ o.write("/*\nModel: %s \n" % name)
 o.write("Verts: %s \n" % len(vert))
 o.write("Tris: %s \n" % len(poly))
 o.write("Exported from blender using blen64.\n")
-o.write("Github link.*/\n\n")
+o.write("github.com/GCaldL/Blen64/\n\n")
 
 ###Triangulate
 #Check for polys w/ more than 3 verts\
