@@ -1,9 +1,5 @@
-# Blen64 v2.1
-# @GCaldL
-# -completely rewritten alorithim(faces)
-# -added UV seam support
-# -removed 16 vert limit per model!!!
-# -added auto triangulate
+# Blen64 v2.2
+# now with vetex colors!!
 
 import bpy
 import os
@@ -14,8 +10,6 @@ s =  100 #scale constant
 bitshift = 6 #bitshift mod
 tsize = 32 #texture size in pixels
 loadlim = 30 #ammount of verts the sytem will load at a time 32 max limit
-
-bpy.app.debug = True
 
 bpy.ops.text.new()
 o = bpy.data.texts["Text"]
