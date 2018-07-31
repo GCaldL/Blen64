@@ -11,7 +11,8 @@ Blender scripts to convert and export mesh objects to draw lists as C header fil
 
 # Usage:
 1.<Setup>
-Simply download the latest script and load it into blenders text editor. Simply select the model you wish to convert and run the script.
+Simply download the latest script and load it into blenders text editor, select the model you wish to convert and run the script.
+note that the model must have an active Vertex Color layer and must be triangulated in order for the script to work as expected.
 ![Setup](https://media.discordapp.net/attachments/434689798817579008/473758873191448576/unknown.png?width=1435&height=898 "Blender")
 
 # Cautionary Note:
