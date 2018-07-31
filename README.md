@@ -1,6 +1,6 @@
 # Blen64
 Blender scripts to convert and export mesh objects to draw lists as C header files for use with the n64 SDK
-![Mesh output example](https://cdn.discordapp.com/attachments/445463417797738496/472802908803563540/unknown.png "BrickWall")
+![Mesh output example](https://cdn.discordapp.com/attachments/445463417797738496/473893698539618314/unknown.png "Room")
 
 # V2.2 - beta
 # Change log:
