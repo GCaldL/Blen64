@@ -19,7 +19,7 @@ note that the model must have an active Vertex Color layer and must be triangula
 Blen64 in it's current state is extremely unequipped to optimize for poly count, that is to say IT WILL EAT UP YOUR VETEX BUDGET, in short it because we are building draw lists from poly loop indices we end up with duplicate vertices, essentially there are duplicate vertices for every face connected to a point, in turn faces aren't technically connected(hence the weird shading effect since surfaces cant be smoothed). This shouldn't be a problem for long and I have a couple different solutions in the works.
 
 # Feature Roadmap:
-- Fix the last of the SAIFAV(super annoying incorect faces and vertices) bugs.
+- Fix the last of the SAIFAV(super annoying incorrect faces and vertices) bugs.
 - GUI based interface(having to run scripts is tiresome)
 - integrate render modes(opaque, translucent, cutout etc.)
 - add multi object support
