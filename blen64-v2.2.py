@@ -4,6 +4,7 @@
 import bpy
 import os
 import random
+import string
 
 s =  100 #scale constant
 bitshift = 6 #bitshift mod
@@ -14,9 +15,21 @@ bpy.ops.text.new()
 o = bpy.data.texts["Text"]
 o.name = "meshout"
 
-def export(obj):
-  name = obj.name
+def clean_name(name):
+  # Only take the characters from the name that are valid for C identifiers.
+  # Note that this makes it possible to have a duplicate, so we test against all
+  # previous names before using.
+  
+  name = "".join(c for c in obj.name if
+    c in string.ascii_letters or
+    c in string.digits or
+    c == '_')
+  if len(name) == 0 or name[0] in string.digits:
+    name = "_" + name
+  return name
 
+def export(obj):
+  name = clean_name(obj.name)
   vert = obj.data.vertices
   poly = obj.data.polygons
   uv = obj.data.uv_layers.active
@@ -62,6 +75,7 @@ def export(obj):
       o.write("   gsSP1Triangle(%d, %d, %d, %d),\n" % (i*3, i*3+1, i*3+2, i*3))
       i += 1
   o.write("};\n\n")
+
 
 for obj in bpy.context.selected_objects:
   export(obj)
