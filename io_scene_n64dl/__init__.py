@@ -19,6 +19,11 @@ import os
 import random
 import string
 
+def descends(parents, child):
+  while child and child not in parents:
+    child = child.parent
+  return child != None
+
 class ExportDL(bpy.types.Operator):
   bl_idname = "export.n64_dl"
   bl_label = "Export N64 DL"
@@ -51,6 +56,8 @@ class ExportDL(bpy.types.Operator):
     tsize = 32   # Texture size in pixels
     loadlim = 30 # Ammount of verts the sytem will load at a time 32 max limit
     
+    trans = bpy.context.object.matrix_world
+    
     name = self.clean_name(obj.name)
     vert = obj.data.vertices
     poly = obj.data.polygons
@@ -76,7 +83,7 @@ class ExportDL(bpy.types.Operator):
     o.write("Vtx %s_VertList[] = {\n" % name)
     for face in poly:
         for vert, loop in zip(face.vertices, face.loop_indices):
-            coord = obj.data.vertices[vert].co
+            coord = obj.data.vertices[vert].co * obj.matrix_world
             uv = obj.data.uv_layers.active.data[loop].uv if obj.data.uv_layers.active else (0,0)
             vcol = obj.data.vertex_colors.active.data[loop].color if obj.data.vertex_colors.active else (1,1,1,1)
             o.write("   { %.2f, %.2f, %.2f, %i, %i << 6, %i << 6, %i, %i, %i, %i},\n" % (coord.x*s, coord.y*s, coord.z*s, random.randint(0,255), uv[0]*tsize, (1-uv[1])*tsize, vcol[0]*255, vcol[1]*255, vcol[2]*255,random.randint(0,255)))
@@ -100,8 +107,8 @@ class ExportDL(bpy.types.Operator):
 
   def execute(self, context):
     file = open(self.filepath, 'w')
-    for obj in bpy.context.selected_objects:
-      if obj.type == 'MESH':
+    for obj in bpy.context.scene.objects:
+      if obj.type == 'MESH' and descends(bpy.context.selected_objects, obj):
         self.export(file, obj)
     return {'FINISHED'}
     
@@ -116,7 +123,6 @@ def menu_func(self, context):
 def register():
   bpy.utils.register_class(ExportDL)
   bpy.types.INFO_MT_file_export.append(menu_func)
-  print("TEST")
   
 def unregister():
   bpy.types.INFO_MT_file_export.remove(menu_func)
