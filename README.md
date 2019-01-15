@@ -4,9 +4,9 @@ Blender scripts to convert and export mesh objects to draw lists as C header fil
 
 # V2.2 - beta
 # Change log:
-- Fixed some bugs:
- - No longer crashes when UVMap/Vertex Colors are not present
- - Always outputs valid C identifiers
+- Only converts selected objects that are meshes
+- No longer crashes when UVMap/Vertex Colors are not present
+- Always outputs valid C identifiers
 - Exports all objects selected in the scene
 - Uses Export Menu now instead of requiring the user to run a script
 - Fixed poly buffer limit issues

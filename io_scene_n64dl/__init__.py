@@ -101,7 +101,8 @@ class ExportDL(bpy.types.Operator):
   def execute(self, context):
     file = open(self.filepath, 'w')
     for obj in bpy.context.selected_objects:
-      self.export(file, obj)
+      if obj.type == 'MESH':
+        self.export(file, obj)
     return {'FINISHED'}
     
   def invoke(self, context, event):
