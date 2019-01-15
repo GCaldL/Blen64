@@ -4,6 +4,11 @@ Blender scripts to convert and export mesh objects to draw lists as C header fil
 
 # V2.2 - beta
 # Change log:
+- Fixed some bugs:
+ - No longer crashes when UVMap/Vertex Colors are not present
+ - Always outputs valid C identifiers
+- Exports all objects selected in the scene
+- Uses Export Menu now instead of requiring the user to run a script
 - Fixed poly buffer limit issues
 - Added Vertex Color Support
 - Fixed missing vert/face disarray issue
@@ -11,16 +16,13 @@ Blender scripts to convert and export mesh objects to draw lists as C header fil
 
 # Usage:
 1.<Setup>
-Simply download the latest script and load it into blenders text editor, select the model you wish to convert and run the script.
-note that the model must have an active Vertex Color layer and must be triangulated in order for the script to work as expected.
-![Setup](https://media.discordapp.net/attachments/434689798817579008/473758873191448576/unknown.png?width=1435&height=898 "Blender")
+Copy the io\_scene\_n64dl folder to your Blender installation's addons folder. Then enable the addon under settings. To run the script, select the objects you wish to export and choose N64 DL from the export menu. ![Setup](https://media.discordapp.net/attachments/434689798817579008/473758873191448576/unknown.png?width=1435&height=898 "Blender")
 
 # Cautionary Note:
 Blen64 in it's current state is extremely unequipped to optimize for poly count, that is to say IT WILL EAT UP YOUR VETEX BUDGET, in short it because we are building draw lists from poly loop indices we end up with duplicate vertices, essentially there are duplicate vertices for every face connected to a point, in turn faces aren't technically connected(hence the weird shading effect since surfaces cant be smoothed). This shouldn't be a problem for long and I have a couple different solutions in the works.
 
 # Feature Roadmap:
 - Fix the last of the SAIFAV(super annoying incorrect faces and vertices) bugs.
-- GUI based interface(having to run scripts is tiresome)
 - integrate render modes(opaque, translucent, cutout etc.)
-- add multi object support
 - possible auto save to header
+- Triangulate non-destructively :)
