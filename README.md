@@ -4,6 +4,9 @@ Blender scripts to convert and export mesh objects to draw lists as C header fil
 
 # V2.2 - beta
 # Change log:
+- Added options to export panel
+- Apply transformations
+- Descend heirarchies of objects
 - Only converts selected objects that are meshes
 - No longer crashes when UVMap/Vertex Colors are not present
 - Always outputs valid C identifiers
