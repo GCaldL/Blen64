@@ -4,8 +4,6 @@ Blender scripts to convert and export mesh objects to draw lists as C header fil
 
 # V2.2 - beta
 # Change log:
-- Set vertex color alpha channel to constant (255)
-- Print header after triangulation (so it prints correct results)
 - Added options to export panel
 - Apply transformations
 - Descend heirarchies of objects
