@@ -85,13 +85,6 @@ class ExportDL(bpy.types.Operator):
     poly = obj.data.polygons
     uv = obj.data.uv_layers.active
 
-    #Info
-    o.write("/*\nModel: %s \n" % name)
-    o.write("Verts: %s \n" % len(vert))
-    o.write("Tris: %s \n" % len(poly))
-    o.write("Exported from blender using blen64.\n")
-    o.write("github.com/GCaldL/Blen64/\n*/\n")
-
     ###Triangulate
     #Check for polys w/ more than 3 verts
     for p in poly:
@@ -100,6 +93,13 @@ class ExportDL(bpy.types.Operator):
             bpy.ops.mesh.quads_convert_to_tris(quad_method='BEAUTY', ngon_method='BEAUTY')
             bpy.ops.object.editmode_toggle()
             break
+    
+    #Info
+    o.write("/*\nModel: %s \n" % name)
+    o.write("Verts: %s \n" % len(vert))
+    o.write("Tris: %s \n" % len(poly))
+    o.write("Exported from blender using blen64.\n")
+    o.write("github.com/GCaldL/Blen64/\n*/\n")
 
     #Vertex List
     o.write("Vtx %s_VertList[] = {\n" % name)
@@ -109,11 +109,9 @@ class ExportDL(bpy.types.Operator):
             uv = obj.data.uv_layers.active.data[loop].uv if obj.data.uv_layers.active else (0,0)
             vcol = obj.data.vertex_colors.active.data[loop].color if obj.data.vertex_colors.active else (1,1,1,1)
             o.write("   { %.2f, %.2f, %.2f, %i, %i << 6, %i << 6, %i, %i, %i, %i},\n"
-              % (coord.x*self.scale, coord.y*self.scale, coord.z*self.scale,
-                 random.randint(0,255),
+              % (coord.x*self.scale, coord.y*self.scale, coord.z*self.scale, 1,
                  uv[0]*self.twidth, (1-uv[1])*self.theight,
-                 vcol[0]*255, vcol[1]*255, vcol[2]*255,
-                 random.randint(0,255)))
+                 vcol[0]*255, vcol[1]*255, vcol[2]*255, 255))
     o.write("};\n\n")
 
     #Face List
@@ -133,6 +131,7 @@ class ExportDL(bpy.types.Operator):
     o.write("};\n\n")
 
   def execute(self, context):
+    names = {}
     file = open(self.filepath, 'w')
     for obj in bpy.context.scene.objects:
       if obj.type == 'MESH' and descends(bpy.context.selected_objects, obj):
