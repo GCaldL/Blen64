@@ -18,6 +18,7 @@ import bpy
 import os
 import random
 import string
+import math
 
 def descends(parents, child):
   while child and child not in parents:
@@ -89,9 +90,9 @@ class ExportDL(bpy.types.Operator):
     #Check for polys w/ more than 3 verts
     for p in poly:
         if len(p.vertices) > 3:
-            bpy.ops.object.editmode_toggle()
+            bpy.ops.object.mode_set(mode='EDIT')
             bpy.ops.mesh.quads_convert_to_tris(quad_method='BEAUTY', ngon_method='BEAUTY')
-            bpy.ops.object.editmode_toggle()
+            bpy.ops.object.mode_set(mode='OBJECT')
             break
     
     #Info
@@ -132,6 +133,7 @@ class ExportDL(bpy.types.Operator):
 
   def execute(self, context):
     names = {}
+    bpy.ops.object.mode_set(mode='OBJECT')
     file = open(self.filepath, 'w')
     for obj in bpy.context.scene.objects:
       if obj.type == 'MESH' and descends(bpy.context.selected_objects, obj):
