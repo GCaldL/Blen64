@@ -77,7 +77,7 @@ class ExportDL(bpy.types.Operator):
 
   def export(self, o, obj):
     bitshift = 6 # Bitshift mod
-    loadlim = 30 # Ammount of verts the sytem will load at a time 32 max limit
+    loadlim = 15 # Ammount of verts the sytem will load at a time 32 max limit
     
     trans = bpy.context.object.matrix_world
     
@@ -124,11 +124,13 @@ class ExportDL(bpy.types.Operator):
         #if the face being created contains a vert that has not been loaded into the buffer
         if i*3+2 > offset+loadlim:
             offset = i*3
-            o.write("   gsSPVertex(%s_VertList+%i,%i,%i),\n" % (name, offset, loadlim, offset))
+            o.write("   gsSPVertex(%s_VertList+%i,%i,%i),\n" % (name, offset, loadlim, 0))
     
         #build faces:
-        o.write("   gsSP1Triangle(%d, %d, %d, %d),\n" % (i*3, i*3+1, i*3+2, i*3))
+        o.write("   gsSP1Triangle(%d, %d, %d, %d),\n" % (i*3-offset, i*3+1-offset, i*3+2-offset, i*3-offset))
         i += 1
+    o.write("   gsDPPipeSync(),\n")
+    o.write("   gsSPEndDisplayList(),\n")
     o.write("};\n\n")
 
   def execute(self, context):

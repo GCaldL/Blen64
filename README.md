@@ -4,6 +4,8 @@ Blender scripts to convert and export mesh objects to draw lists as C header fil
 
 # V2.2 - beta
 # Change log:
+- Reindex triangles after each vertex load (fixes large exports)
+- End display list properly
 - Allow script to run in edit mode
 - Clear the symbol table between exports
 - Set the alpha to 255 for vertex colors
